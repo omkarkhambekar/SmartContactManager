@@ -29,10 +29,11 @@ function changeTheme() {
     //     changePageTheme(currentTheme,oldTheme);
     // });
     if (changeThemeButton) {
-        changeThemeButton.addEventListener("click", () => {
+        changeThemeButton.addEventListener("click", (event) => {
             console.log("change theme button clicked");
             const oldTheme = currentTheme;
-            currentTheme = (currentTheme === "dark") ? "light" : "dark";
+            currentTheme = (currentTheme === "light") ? "dark" : "light";
+            console.log(currentTheme);
             changePageTheme(currentTheme, oldTheme);
         });
     }
@@ -68,7 +69,7 @@ function changePageTheme(theme,oldTheme) {
 
     const buttonTextElement = document.querySelector('#theme_change_button span');
     if (buttonTextElement) {
-        buttonTextElement.textContent = theme === "light" ? "Light" : "Dark";
+        buttonTextElement.textContent = theme === "light" ? "Dark" : "Light";
     }
 }
 
