@@ -2,8 +2,11 @@ package com.omkar_smartcontactmanager.scm.controllers;
 
 
 import com.omkar_smartcontactmanager.scm.entities.User;
+import com.omkar_smartcontactmanager.scm.entities.message;
+import com.omkar_smartcontactmanager.scm.entities.messageType;
 import com.omkar_smartcontactmanager.scm.forms.UserForm;
 import com.omkar_smartcontactmanager.scm.services.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,7 +60,7 @@ public class PageController {
 
     //processing regiter
     @RequestMapping(value="/do-register", method = RequestMethod.POST)
-    public String processRegister(@ModelAttribute UserForm userForm) {
+    public String processRegister(@ModelAttribute UserForm userForm, HttpSession session) {
         System.out.println("Processing registration");
         //fetch the form data
         //user form
@@ -65,19 +68,29 @@ public class PageController {
         //validate data
 
         //save to db
-        User user = User.builder()
-                .name(userForm.getName())
-                .email(userForm.getEmail())
-                .password(userForm.getPassword())
-                .about(userForm.getAbout())
-                .phoneNumber(userForm.getPhoneNumber())
-                .profilePic("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Ffree-vector%2Fdefault-profile-picture&psig=AOvVaw34FhluuG3ADRoJY8XhOVhl&ust=1720180966420000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCOC4m9GrjYcDFQAAAAAdAAAAABAE")
-                .build();
+//        User user = User.builder()
+//                .name(userForm.getName())
+//                .email(userForm.getEmail())
+//                .password(userForm.getPassword())
+//                .about(userForm.getAbout())
+//                .phoneNumber(userForm.getPhoneNumber())
+//                .profilePic("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Ffree-vector%2Fdefault-profile-picture&psig=AOvVaw34FhluuG3ADRoJY8XhOVhl&ust=1720180966420000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCOC4m9GrjYcDFQAAAAAdAAAAABAE")
+//                .build();
+        User user = new User();
+        user.setName(userForm.getName());
+        user.setEmail(userForm.getEmail());
+        user.setPassword(userForm.getPassword());
+        user.setAbout(userForm.getAbout());
+        user.setPhoneNumber(userForm.getPhoneNumber());
+        user.setProfilePic("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Ffree-vector%2Fdefault-profile-picture&psig=AOvVaw34FhluuG3ADRoJY8XhOVhl&ust=1720180966420000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCOC4m9GrjYcDFQAAAAAdAAAAABAE");
 
-       User savedUser =  userService.saveUser(user);
+        User savedUser =  userService.saveUser(user);
 
         System.out.println("USER SAVED");
-        //mesage = registrastion sucess
+        //mesage = registrastion sucesss
+        message msg = message.builder().content("Registration Successful").type(messageType.green).build();
+        session.setAttribute("message",msg);
+
         //redirect tot login
         return "redirect:/register";
     }
