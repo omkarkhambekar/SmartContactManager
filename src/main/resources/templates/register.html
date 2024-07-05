@@ -19,7 +19,7 @@
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Signup Here</h5>
                 <p class="font-normal text-gray-400 dark:text-gray-400">Start managing contacts on cloud.</p>
 <!--                this is form -->
-                <form data-th-action="@{'/do-register'}" method="post" data-th-object="${userForm}" class="mt-5">
+                <form data-th-action="@{'/do-register'}" method="post" data-th-object="${userForm}" class="mt-5" novalidate>
 <!--                    name -->
                     <div class="mb-3">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
@@ -27,6 +27,8 @@
                          focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
                           dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
                            dark:focus:border-blue-500" placeholder="Enter here" required />
+
+                        <p data-th-if="${#fields.hasErrors('name')}" data-th-error="*{name}" class="text-red-600 px-1 py-2 "> Name Required</p>
                     </div>
 <!--                    email-->
                     <div class="mb-3">
@@ -35,6 +37,7 @@
                          focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
                           dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
                            dark:focus:border-blue-500" placeholder="Enter here" required />
+                        <p data-th-if="${#fields.hasErrors('email')}" data-th-error="*{email}" class="text-red-600 px-1 py-2 "> Email Required</p>
                     </div>
 <!--                    password-->
                     <div class="mb-3">
@@ -43,6 +46,7 @@
                          focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
                           dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
                            dark:focus:border-blue-500" placeholder="" required />
+                        <p data-th-if="${#fields.hasErrors('password')}" data-th-error="*{password}" class="text-red-600 px-1 py-2 "> Password Required</p>
                     </div>
 <!--                    Phone number -->
                     <div class="mb-3">
@@ -51,6 +55,7 @@
                          focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
                           dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
                            dark:focus:border-blue-500" placeholder="" required />
+                        <p data-th-if="${#fields.hasErrors('phoneNumber')}" data-th-error="*{phoneNumber}" class="text-red-600 px-1 py-2 "> Phone Number Required</p>
                     </div>
 <!--                    About text area-->
                     <div class="mb-3">
@@ -59,6 +64,8 @@
                          rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700
                           dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                   placeholder="Write here..."></textarea>
+                        <p data-th-if="${#fields.hasErrors('about')}" data-th-error="*{about}" class="text-red-600 px-1 py-2 "> About Required</p>
+
                     </div>
 <!--                    buttons-->
                     <div type="submit" class="mb-3 flex justify-center space-x-3">

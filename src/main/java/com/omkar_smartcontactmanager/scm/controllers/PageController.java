@@ -7,9 +7,11 @@ import com.omkar_smartcontactmanager.scm.entities.messageType;
 import com.omkar_smartcontactmanager.scm.forms.UserForm;
 import com.omkar_smartcontactmanager.scm.services.UserService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -60,12 +62,16 @@ public class PageController {
 
     //processing regiter
     @RequestMapping(value="/do-register", method = RequestMethod.POST)
-    public String processRegister(@ModelAttribute UserForm userForm, HttpSession session) {
+    public String processRegister(@Valid @ModelAttribute UserForm userForm, BindingResult rBindingResult, HttpSession session) {
         System.out.println("Processing registration");
         //fetch the form data
         //user form
         System.out.println(userForm);
         //validate data
+        if(rBindingResult.hasErrors()) {
+            return "register";
+        }
+
 
         //save to db
 //        User user = User.builder()
