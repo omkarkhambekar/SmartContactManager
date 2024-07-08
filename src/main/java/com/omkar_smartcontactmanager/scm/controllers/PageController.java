@@ -26,6 +26,11 @@ public class PageController {
         this.userService = userService;
     }
 
+    @GetMapping("/")
+    public String index() {
+        return "redirect:/home";
+    }
+
     @RequestMapping("/home")
     public String home() {
             System.out.println("In home page handler");

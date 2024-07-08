@@ -27,7 +27,7 @@ public class UserForm {
     @NotBlank(message = "Something about yourself required")
     private String about;
 
-    @NotBlank
+    @NotBlank(message = "Phone number Required")
     @Size(min=8, max=12, message = "Invalid Phone Number")
     private String phoneNumber;
 

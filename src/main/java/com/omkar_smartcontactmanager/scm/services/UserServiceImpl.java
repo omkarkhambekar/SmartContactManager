@@ -1,10 +1,12 @@
 package com.omkar_smartcontactmanager.scm.services;
 
+import com.omkar_smartcontactmanager.scm.entities.AppConstants;
 import com.omkar_smartcontactmanager.scm.entities.User;
 import com.omkar_smartcontactmanager.scm.exceptions.ResourceNotFoundException;
 import com.omkar_smartcontactmanager.scm.repositories.UserRepositories;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,10 +18,15 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService{
 
     private final UserRepositories userRepositories;
-
-    public UserServiceImpl(UserRepositories userRepositories) {
+    private final PasswordEncoder passwordEncoder;
+    public UserServiceImpl(UserRepositories userRepositories,PasswordEncoder passwordEncoder) {
         this.userRepositories = userRepositories;
+        this.passwordEncoder = passwordEncoder;
     }
+
+
+
+
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -28,6 +35,10 @@ public class UserServiceImpl implements UserService{
 
         String userId = UUID.randomUUID().toString();
         user.setUserId(userId);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        //set the user role
+        user.setRoleList(List.of(AppConstants.ROLE_USER));
 
         return userRepositories.save(user);
     }
